@@ -5,6 +5,7 @@
 const express = require('express');
 const logger = require('morgan');
 const fs = require('fs');
+const swaggerUi = require('swagger-ui-express');
 
 /* 
  * Gobal variables
@@ -15,6 +16,7 @@ const routePath = `${__dirname}/routes`;
 const config = require('./config');
 const debug = require('./utils/logger').debugger(__filename);
 const response = require('./utils/response');
+const swaggerSpec = require('./utils/swagger');
 
 /* 
  * Application middleware functions
@@ -55,6 +57,8 @@ app.use(express.urlencoded({
     verify: undefined
 }));
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 /* 
  * Import all routes that app supports. 
  */
@@ -79,7 +83,7 @@ fs.readdirSync(routePath)
     });
 
 /* 
- * Import default version routes that app supports. 
+ * Default routes if no version specified. 
  */
 
 fs.readdirSync(`${routePath}/${config.api.version}`)

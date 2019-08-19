@@ -7,8 +7,19 @@ const router = express.Router();
 const response = require('../../utils/response');
 
 /**
- * Version - V1 route file
- */
+* @swagger
+* /:
+*   get:
+*     tags:
+*       - root
+*     summary: Server verification api
+*     security: []
+*     responses:
+*       200:
+*         "$ref": '#/components/responses/200'
+*       500:
+*         "$ref": '#/components/responses/500'
+*/
 
 router.all('/', function (req, res, next) {
   var resObject = {
