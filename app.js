@@ -35,17 +35,10 @@ app.use(express.json({
     verify: undefined
 }));
 
-app.use(express.static('public', {
-    dotfiles: 'ignore',
-    etag: true,
-    extensions: false,
-    fallthrough: true,
-    immutable: false,
-    index: 'index.html',
-    lastModified: true,
-    maxAge: 0,
-    redirect: true,
-    setHeaders: function (res, path, stat) { }
+app.use(express.static('public'));
+
+app.use('/coverage', express.static('coverage', {
+    index: 'index.html'
 }));
 
 app.use(express.urlencoded({

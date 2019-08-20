@@ -38,7 +38,7 @@ const resCodes = {
         status: false,
         code: 500,
         message: 'Internal server error',
-    },
+    }
 };
 
 /**
