@@ -17,6 +17,7 @@
         "sourceType": "module"
     },
     "rules": {
-        "semi": [2, "always"]
+        "semi": 0,
+        "no-unused-vars": 1
     }
 }
