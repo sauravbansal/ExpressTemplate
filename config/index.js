@@ -16,13 +16,13 @@ const confData = {};
  */
 
 fs.readdirSync(`${__dirname}/env`)
-    .filter(function (file) {
-        return (fs.lstatSync(`${__dirname}/env/${file}`).isFile() && file.slice(-3) === '.js');
-    })
-    .forEach(function (file) {
-        var fileName = file.replace(file.slice(-3), '');
-        confData[fileName] = Object.assign(defaults, require(`${__dirname}/env/${file}`));
-    });
+  .filter(function (file) {
+    return (fs.lstatSync(`${__dirname}/env/${file}`).isFile() && file.slice(-3) === '.js');
+  })
+  .forEach(function (file) {
+    var fileName = file.replace(file.slice(-3), '');
+    confData[fileName] = Object.assign(defaults, require(`${__dirname}/env/${file}`));
+  });
 
 /**
  * Get running mode from environment or default to development.

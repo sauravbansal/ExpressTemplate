@@ -17,8 +17,8 @@ const pName = require(pwd + '/package.json').name;
  */
 
 module.exports.debugger = function (fileName) {
-    const filePath = fileName.substring(
-        pwd.length, fileName.lastIndexOf("."));
-    const ns = filePath.replace(new RegExp('\\' + path.sep, 'g'), ':');
-    return debug(`${pName}${ns}`);
+  const filePath = fileName.substring(
+    pwd.length, fileName.lastIndexOf('.'));
+  const ns = filePath.replace(new RegExp('\\' + path.sep, 'g'), ':');
+  return debug(`${pName}${ns}`);
 };

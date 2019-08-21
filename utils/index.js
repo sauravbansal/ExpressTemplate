@@ -2,6 +2,6 @@
  * Global variables.
  */
 
-let helper = {};
+const helper = {};
 
 module.exports = helper;
