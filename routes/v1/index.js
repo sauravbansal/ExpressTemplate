@@ -28,7 +28,7 @@ router.all('/', function (req, res, next) {
     method: req.method
   };
 
-  res.send(response(null, 200, resObject));
+  response(null, res, 200, resObject);
 });
 
 module.exports = router;

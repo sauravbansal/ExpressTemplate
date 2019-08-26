@@ -101,7 +101,7 @@ var swaggerDefinition = {
         }
       },
       400: {
-        description: 'Incomplete/Bad request',
+        description: 'Incomplete/Bad Request',
         content: {
           'application/json': {
             schema: {
@@ -111,7 +111,7 @@ var swaggerDefinition = {
         }
       },
       401: {
-        description: 'Unauthorized request',
+        description: 'Unauthorized Request',
         content: {
           'application/json': {
             schema: {

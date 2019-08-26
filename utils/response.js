@@ -10,34 +10,60 @@ const debug = require('./logger').debugger(__filename);
 
 const resCodes = {
   200: {
-    status: true,
-    code: 200,
-    message: 'Processed Successfully'
+    httpStatus: 200,
+    msg: {
+      status: true,
+      code: 200,
+      message: 'Processed Successfully'
+    }
   },
   201: {
-    status: true,
-    code: 201,
-    message: 'Created/Modified Successfully'
+    httpStatus: 201,
+    msg: {
+      status: true,
+      code: 201,
+      message: 'Created/Modified Successfully'
+    }
+  },
+  202: {
+    httpStatus: 202,
+    msg: {
+      status: true,
+      code: 202,
+      message: 'Deleted Successfully'
+    }
   },
   400: {
-    status: false,
-    code: 400,
-    message: 'Incomplete/Bad request'
+    httpStatus: 400,
+    msg: {
+      status: false,
+      code: 400,
+      message: 'Incomplete/Bad Request'
+    }
   },
   401: {
-    status: false,
-    code: 401,
-    message: 'Unauthorized request'
+    httpStatus: 401,
+    msg: {
+      status: false,
+      code: 401,
+      message: 'Unauthorized Request'
+    }
   },
   404: {
-    status: false,
-    code: 404,
-    message: 'Requested resource not found'
+    httpStatus: 404,
+    msg: {
+      status: false,
+      code: 404,
+      message: 'Requested Resource Not Found'
+    }
   },
   500: {
-    status: false,
-    code: 500,
-    message: 'Internal server error'
+    httpStatus: 500,
+    msg: {
+      status: false,
+      code: 500,
+      message: 'Internal Server Error'
+    }
   }
 };
 
@@ -45,31 +71,29 @@ const resCodes = {
  * Response creation function.
  */
 
-module.exports = function (error, code, data) {
-  debug(error, code, data);
-  var response = resCodes[code];
+module.exports = function (error, res, resCode, resData) {
+  debug(error, resCode, resData);
+  var response = resCodes[resCode];
   if (!response) {
     response = resCodes[500];
   }
 
   if (error) {
-    response.error = {};
+    response.msg.error = {};
 
     if (error.name) {
-      response.error.name = error.name;
+      response.msg.error.name = error.name;
     }
 
     if (error.message) {
-      response.error.message = error.message;
+      response.msg.error.message = error.message;
     }
-
-    return response;
   }
 
-  if (data) {
-    response.result = data;
+  if (resData) {
+    response.msg.result = resData;
   }
 
   debug(response);
-  return response;
+  res.status(response.httpStatus).send(response.msg);
 };

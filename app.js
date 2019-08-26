@@ -37,10 +37,6 @@ app.use(express.json({
 
 app.use(express.static('public'));
 
-app.use('/coverage', express.static('coverage', {
-  index: 'index.html'
-}));
-
 app.use(express.urlencoded({
   extended: false,
   inflate: true,
@@ -48,6 +44,10 @@ app.use(express.urlencoded({
   parameterLimit: 1000,
   type: 'application/x-www-form-urlencoded',
   verify: undefined
+}));
+
+app.use('/coverage', express.static('coverage', {
+  index: 'index.html'
 }));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -93,7 +93,7 @@ fs.readdirSync(`${routePath}/${config.api.version}`)
   });
 
 /*
- * Application error handling middleware.
+ * Application unavailable resource handling middleware.
  */
 
 app.use(function (req, res, next) {
@@ -107,7 +107,7 @@ app.use(function (req, res, next) {
       url: req.originalUrl
     };
 
-    res.status(404).send(response(null, 404, resObject));
+    response(null, res, 404, resObject);
   }
 });
 
@@ -120,7 +120,7 @@ app.use(function (err, req, res, next) {
   if (res.headersSent) {
     return next(err);
   } else {
-    res.status(500).send(err.stack);
+    response(err, res, 500);
   }
 });
 
