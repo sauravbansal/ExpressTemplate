@@ -66,12 +66,7 @@ fs.readdirSync(routePath)
         return (fs.lstatSync(`${routePath}/${dir}/${file}`).isFile() && file.slice(-3) === '.js');
       })
       .forEach(function (file) {
-        var routeName = file.replace(file.slice(-3), '');
-        if (routeName === 'index') {
-          app.use(`/${dir}`, require(`${routePath}/${dir}/${file}`));
-        } else {
-          app.use(`/${dir}/${routeName}`, require(`${routePath}/${dir}/${file}`));
-        }
+        app.use(`/${dir}`, require(`${routePath}/${dir}/`));
       });
   });
 
@@ -79,18 +74,21 @@ fs.readdirSync(routePath)
  * Default routes if no version specified.
  */
 
-fs.readdirSync(`${routePath}/${config.api.version}`)
-  .filter(function (file) {
-    return (fs.lstatSync(`${routePath}/${config.api.version}/${file}`).isFile() && file.slice(-3) === '.js');
-  })
-  .forEach(function (file) {
-    var routeName = file.replace(file.slice(-3), '');
-    if (routeName === 'index') {
-      app.use('/', require(`${routePath}/${config.api.version}/${file}`));
-    } else {
-      app.use(`/${routeName}`, require(`${routePath}/${config.api.version}/${file}`));
-    }
-  });
+try {
+  fs.readdirSync(`${routePath}/${config.api.version}`)
+    .filter(function (file) {
+      return (fs.lstatSync(`${routePath}/${config.api.version}/${file}`).isFile() && file.slice(-3) === '.js');
+    })
+    .forEach(function (file) {
+      app.use('/', require(`${routePath}/${config.api.version}/`));
+    });
+} catch (error) {
+  if (error.code === 'ENOENT') {
+    console.log('Default API Version not found');
+  } else {
+    console.log('Error reading default API Router');
+  }
+};
 
 /*
  * Application unavailable resource handling middleware.
