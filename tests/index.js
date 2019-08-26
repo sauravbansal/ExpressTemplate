@@ -37,4 +37,20 @@ describe('/', () => {
         });
     });
   });
+
+  describe('Post /login', () => {
+    it('Check login api', function (done) {
+      chai.request(server)
+        .post('/login')
+        .end((err, res) => {
+          if (err) {
+            done(err);
+          } else {
+            console.log(res.body);
+            res.should.have.status(200);
+            done();
+          }
+        });
+    });
+  });
 });

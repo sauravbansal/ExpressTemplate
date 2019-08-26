@@ -5,6 +5,7 @@
 const express = require('express');
 const router = express.Router();
 const response = require('../../utils/response');
+const auth = require('../../middlewares/auth');
 
 /**
 * @swagger
@@ -30,5 +31,24 @@ router.all('/', function (req, res, next) {
 
   response(null, res, 200, resObject);
 });
+
+/**
+* @swagger
+* /:
+*   post:
+*     tags:
+*       - root
+*     summary: Login Api for customer/enterprise-user
+*     security: []
+*     responses:
+*       200:
+*         "$ref": '#/components/responses/200'
+*       401:
+*         "$ref": '#/components/responses/401'
+*       500:
+*         "$ref": '#/components/responses/500'
+*/
+
+router.post('/login', auth.sendJWTToken);
 
 module.exports = router;
