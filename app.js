@@ -88,6 +88,7 @@ try {
   } else {
     console.log('Error reading default API Router');
   }
+  process.exit(1);
 };
 
 /*

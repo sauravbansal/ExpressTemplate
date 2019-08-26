@@ -46,7 +46,6 @@ describe('/', () => {
           if (err) {
             done(err);
           } else {
-            console.log(res.body);
             res.should.have.status(200);
             done();
           }

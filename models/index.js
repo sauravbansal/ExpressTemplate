@@ -20,7 +20,8 @@ const db = { Sequelize: Sequelize };
  * Read DB configuration details and initilize Sequelize object.
  */
 
-const sequelize = new Sequelize(config.db.database,
+const sequelize = new Sequelize(
+  config.db.database,
   config.db.username,
   config.db.password,
   {

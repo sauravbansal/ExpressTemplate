@@ -14,7 +14,7 @@ const config = require('../config');
  */
 
 exports.sendJWTToken = function (req, res, next) {
-  let options = {
+  const options = {
     expiresIn: config.jwtOptions.expiresIn,
     issuer: config.jwtOptions.issuer
   };
@@ -29,7 +29,6 @@ exports.sendJWTToken = function (req, res, next) {
  */
 
 exports.isJWTAuthenticated = function (req, res, next) {
-  console.log("isJWTAuthenticated");
   const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: getSecret(),
