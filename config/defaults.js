@@ -9,7 +9,12 @@ module.exports = {
   api: {
     version: 'v1'
   },
-  jwtSecret: `${pName}-${process.env.NODE_ENV || 'development'}`,
+  jwtOptions: {
+    secret: `${pName}-${process.env.NODE_ENV || 'development'}`,
+    issuer: `${pName}`,
+    expiresIn: 60000,
+    ignoreExpiration: false
+  },
   dbConfig: {
     port: 3306,
     dialect: 'mysql',

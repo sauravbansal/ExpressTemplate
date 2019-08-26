@@ -14,8 +14,13 @@ const config = require('../config');
  */
 
 exports.sendJWTToken = function (req, res, next) {
+  let options = {
+    expiresIn: config.jwtOptions.expiresIn,
+    issuer: config.jwtOptions.issuer
+  };
+
   const user = req.user ? req.user : {};
-  const token = jwt.sign(user, getSecret());
+  const token = jwt.sign(user, getSecret(), options);
   response(null, res, 200, { token: token });
 };
 
@@ -24,9 +29,12 @@ exports.sendJWTToken = function (req, res, next) {
  */
 
 exports.isJWTAuthenticated = function (req, res, next) {
+  console.log("isJWTAuthenticated");
   const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: getSecret()
+    secretOrKey: getSecret(),
+    issuer: config.jwtOptions.issuer,
+    ignoreExpiration: config.jwtOptions.ignoreExpiration
   };
 
   const strategy = new JwtStrategy(opts, function (payload, done) {
@@ -34,7 +42,7 @@ exports.isJWTAuthenticated = function (req, res, next) {
   });
 
   passport.use(strategy);
-  passport.authenticate('jwt', function (err, user, info) {
+  passport.authenticate('jwt', { session: false }, function (err, user, info) {
     if (err) {
       response(err, res, 401);
     } else if (info) {
@@ -51,5 +59,5 @@ exports.isJWTAuthenticated = function (req, res, next) {
  */
 
 const getSecret = function () {
-  return new Buffer.from(config.jwtSecret, 'base64');
+  return new Buffer.from(config.jwtOptions.secret, 'base64');
 };
