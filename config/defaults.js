@@ -18,7 +18,6 @@ module.exports = {
   dbConfig: {
     port: 3306,
     dialect: 'mysql',
-    operatorsAliases: false,
     logging: false
   }
 };

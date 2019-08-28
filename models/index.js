@@ -14,7 +14,7 @@ const config = require(path.join(__dirname, '/../config'));
  * Global variables.
  */
 
-const db = { Sequelize: Sequelize };
+const db = {};
 
 /**
  * Read DB configuration details and initilize Sequelize object.
@@ -30,8 +30,8 @@ const sequelize = new Sequelize(
   });
 
 /**
- * Import DB Model from model files.
- */
+* Import DB Model from model files.
+*/
 
 fs
   .readdirSync(__dirname)
@@ -42,5 +42,14 @@ fs
     const model = sequelize.import(path.join(__dirname, file));
     db[model.name] = model;
   });
+
+Object.keys(db).forEach(modelName => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
 module.exports = db;

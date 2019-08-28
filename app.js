@@ -17,6 +17,7 @@ const config = require('./config');
 const debug = require('./utils/logger').debugger(__filename);
 const response = require('./utils/response');
 const swaggerSpec = require('./utils/swagger');
+const dbConnection = require('./models');
 
 /*
  * Application middleware functions
@@ -53,6 +54,20 @@ app.use('/coverage', express.static('coverage', {
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 /*
+ * DB connection verfication.
+ */
+
+dbConnection.sequelize
+  .authenticate()
+  .then(() => {
+    debug('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error(`Unable to connect to the database due to [${err.name} : ${err.message}]`);
+    process.exit(1);
+  });
+
+/*
  * Import all routes that app supports.
  */
 
@@ -82,11 +97,11 @@ try {
     .forEach(function (file) {
       app.use('/', require(`${routePath}/${config.api.version}/`));
     });
-} catch (error) {
-  if (error.code === 'ENOENT') {
-    console.log('Default API Version not found');
+} catch (err) {
+  if (err.code === 'ENOENT') {
+    console.error('Default API Version not found');
   } else {
-    console.log('Error reading default API Router');
+    console.error('Error reading default API Router');
   }
   process.exit(1);
 };

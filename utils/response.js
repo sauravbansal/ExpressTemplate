@@ -71,22 +71,22 @@ const resCodes = {
  * Response creation function.
  */
 
-module.exports = function (error, res, resCode, resData) {
-  debug(error, resCode, resData);
+module.exports = function (err, res, resCode, resData) {
+  debug(err, resCode, resData);
   var response = resCodes[resCode];
   if (!response) {
     response = resCodes[500];
   }
 
-  if (error) {
+  if (err) {
     response.msg.error = {};
 
-    if (error.name) {
-      response.msg.error.name = error.name;
+    if (err.name) {
+      response.msg.error.name = err.name;
     }
 
-    if (error.message) {
-      response.msg.error.message = error.message;
+    if (err.message) {
+      response.msg.error.message = err.message;
     }
   }
 
