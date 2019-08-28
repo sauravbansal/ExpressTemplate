@@ -21,7 +21,7 @@ fs.readdirSync(`${__dirname}/env`)
   })
   .forEach(function (file) {
     var fileName = file.replace(file.slice(-3), '');
-    confData[fileName] = Object.assign(defaults, require(`${__dirname}/env/${file}`));
+    confData[fileName] = Object.assign({}, defaults, require(`${__dirname}/env/${file}`));
   });
 
 /**
