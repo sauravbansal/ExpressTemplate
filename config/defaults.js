@@ -19,5 +19,10 @@ module.exports = {
     port: 3306,
     dialect: 'mysql',
     logging: false
+  },
+  corsOptions: {
+    origin: '*',
+    methods: 'POST, GET, PATCH, DELETE',
+    allowedHeaders: 'Content-Type, Authorization'
   }
 };

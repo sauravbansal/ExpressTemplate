@@ -4,6 +4,7 @@
 
 const express = require('express');
 const logger = require('morgan');
+const cors = require('cors');
 const fs = require('fs');
 const swaggerUi = require('swagger-ui-express');
 
@@ -26,6 +27,7 @@ const dbConnection = require('./models');
 app.disable('x-powered-by');
 
 app.use(logger(config.logFormat));
+app.use(cors(config.corsOptions));
 
 app.use(express.json({
   inflate: true,

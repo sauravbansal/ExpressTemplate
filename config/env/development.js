@@ -4,11 +4,11 @@
 
 module.exports = {
   db: {
-    database: 'database',
-    username: 'username',
-    password: 'password',
+    database: 'template',
+    username: 'root',
+    password: 'rootpass',
     dbConfig: {
-      host: 'hostname'
+      host: 'localhost'
     }
   }
 };
