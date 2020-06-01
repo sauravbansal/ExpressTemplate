@@ -58,5 +58,5 @@ exports.isJWTAuthenticated = function (req, res, next) {
  */
 
 const getSecret = function () {
-  return new Buffer.from(config.jwtOptions.secret, 'base64');
+  return Buffer.from(config.jwtOptions.secret, 'base64');
 };
