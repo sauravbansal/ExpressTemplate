@@ -69,6 +69,18 @@ dbConnection.sequelize
     process.exit(1);
   });
 
+/**
+ * Verify if TMP_DIR exists. If not create TMP_DIR
+ */
+
+if (!fs.existsSync(config.tmpDir)) {
+  fs.mkdirSync(config.tmpDir);
+}
+
+if (!fs.existsSync(config.cacheDir)) {
+  fs.mkdirSync(config.cacheDir);
+}
+
 /*
  * Import all routes that app supports.
  */

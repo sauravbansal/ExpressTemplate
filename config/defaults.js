@@ -6,6 +6,8 @@ var pName = require(process.env.PWD + '/package.json').name;
 
 module.exports = {
   logFormat: ':remote-addr [:date[clf]] - ":method :url HTTP/:http-version" :status :res[content-length] :response-time[digits]',
+  tmpDir: './tmp',
+  cacheDir: './cache-files',
   api: {
     version: 'v1'
   },
